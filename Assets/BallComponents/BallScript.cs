@@ -5,15 +5,12 @@ using UnityEngine;
 public class BallScript : MonoBehaviour
 {
 
-    public float speed = 60;
+    public float speed = 10;
     public float maxSpeed = 100;
 
     private Rigidbody rb;
     bool isBallClicked = false;
 
-
-
-    
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -27,20 +24,22 @@ public class BallScript : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
+
+            
+
             RaycastHit objectHit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out objectHit, Mathf.Infinity))
             {
                 if(objectHit.collider.gameObject.tag == "Ball")
-                {
-                    Debug.Log("Topa Tıkladın laaan");
-                    
+                { 
 
                     isBallClicked = true;
                 }
             }
         }
+
 
 
 

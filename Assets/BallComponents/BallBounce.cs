@@ -6,10 +6,18 @@ public class BallBounce : MonoBehaviour
 {
 
     Rigidbody rb;
+    Vector3 comingDirection;
+    public float bounceMultiplier = 0.8f;
+ 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+    }
+
+    void FixedUpdate()
+    {
+        comingDirection = rb.velocity;
     }
 
     // Update is called once per frame
@@ -18,11 +26,10 @@ public class BallBounce : MonoBehaviour
     {
         if (coll.gameObject.tag == "Bouncable")
         {
-            Vector3 normal = coll.contacts[0].normal.normalized;
-            float velocityMagnitude = rb.velocity.magnitude;
-            Vector3 comingDirection = rb.velocity.normalized;
-            Vector3 bounceDirection = (comingDirection + (2 * normal)).normalized;
-            rb.velocity = bounceDirection * velocityMagnitude;
+            Vector3 normal = coll.contacts[0].normal;
+            Vector3 bounceDirection = Vector3.Reflect(comingDirection, normal);
+
+            rb.velocity = bounceDirection * bounceMultiplier;
         }
     }
 }
