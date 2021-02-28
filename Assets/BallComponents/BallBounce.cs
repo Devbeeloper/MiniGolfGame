@@ -18,8 +18,11 @@ public class BallBounce : MonoBehaviour
     {
         if (coll.gameObject.tag == "Bouncable")
         {
-            Debug.Log("sek sek sikerek");
-            rb.velocity = Vector3.Reflect(rb.velocity, coll.contacts[0].normal);
+            Vector3 normal = coll.contacts[0].normal.normalized;
+            float velocityMagnitude = rb.velocity.magnitude;
+            Vector3 comingDirection = rb.velocity.normalized;
+            Vector3 bounceDirection = (comingDirection + (2 * normal)).normalized;
+            rb.velocity = bounceDirection * velocityMagnitude;
         }
     }
 }
